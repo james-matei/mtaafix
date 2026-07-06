@@ -6,6 +6,7 @@ import com.mtaafix.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.mtaafix.backend.exception.EmailAlreadyExistsException;
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +18,9 @@ public class AuthService {
 
     public String register(RegisterRequest request) {
 
-    if (userRepository.existsByEmail(request.getEmail())) {
-        return "Email already exists";
-    }
-
+   if (userRepository.existsByEmail(request.getEmail())) {
+    throw new EmailAlreadyExistsException("Email already exists");
+}
     User user = new User();
 
     user.setName(request.getName());
