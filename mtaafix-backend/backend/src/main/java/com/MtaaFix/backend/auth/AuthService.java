@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.mtaafix.backend.exception.EmailAlreadyExistsException;
+import com.mtaafix.backend.exception.InvalidCredentialsException;
 
 @Service
 @RequiredArgsConstructor
@@ -35,14 +36,11 @@ public class AuthService {
 public String login(LoginRequest request) {
 
     User user = userRepository.findByEmail(request.getEmail())
-            .orElse(null);
-
-    if (user == null) {
-        return "User not found";
-    }
+            .orElseThrow(() ->
+                    new InvalidCredentialsException("Invalid email or password"));
 
     if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-        return "Invalid password";
+        throw new InvalidCredentialsException("Invalid email or password");
     }
 
     return jwtUtil.generateToken(user.getEmail());

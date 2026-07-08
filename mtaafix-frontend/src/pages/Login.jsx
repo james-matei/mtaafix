@@ -1,11 +1,14 @@
 import { useState } from "react";
 import api from "../api/api";
 import { login } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
     e.preventDefault();
@@ -13,7 +16,14 @@ function Login() {
     try {
 
         // Login using the service
-        await login(email, password);
+       const token = await login(email, password);
+
+if (!token.startsWith("eyJ")) {
+    alert(token);
+    return;
+}
+
+navigate("/dashboard");
 
         // Test protected endpoint
         const testResponse = await api.get("/test");
@@ -26,7 +36,7 @@ function Login() {
 
         console.error(error);
 
-        alert("Login failed!");
+        alert(error.response?.data || "Login failed");
 
     }
 };
