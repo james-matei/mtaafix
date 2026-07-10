@@ -1,6 +1,11 @@
 package com.mtaafix.backend.issue;
 
+import com.mtaafix.backend.issue.dto.IssueResponse;
+import com.mtaafix.backend.user.User;
+import com.mtaafix.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,16 +16,47 @@ import java.util.List;
 public class IssueService {
 
     private final IssueRepository issueRepository;
+    private final UserRepository userRepository;
 
-    public Issue createIssue(Issue issue) {
+    public IssueResponse createIssue(Issue issue) {
 
-        issue.setStatus("OPEN");
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        System.out.println("Logged in user: " + email);
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        issue.setUser(user);
+        issue.setStatus(IssueStatus.OPEN);
         issue.setCreatedAt(LocalDateTime.now());
 
-        return issueRepository.save(issue);
+        Issue savedIssue = issueRepository.save(issue);
+
+        return mapToResponse(savedIssue);
     }
 
-    public List<Issue> getAllIssues() {
-        return issueRepository.findAll();
+    public List<IssueResponse> getAllIssues() {
+
+        return issueRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
+    private IssueResponse mapToResponse(Issue issue) {
+
+        return new IssueResponse(
+                issue.getId(),
+                issue.getTitle(),
+                issue.getDescription(),
+                issue.getLocation(),
+                issue.getStatus(),
+                issue.getCreatedAt(),
+                issue.getUser().getName()
+        );
     }
 }

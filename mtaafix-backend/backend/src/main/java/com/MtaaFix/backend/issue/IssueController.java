@@ -1,5 +1,6 @@
 package com.mtaafix.backend.issue;
 
+import com.mtaafix.backend.issue.dto.IssueResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +14,12 @@ public class IssueController {
     private final IssueService issueService;
 
     @PostMapping
-    public Issue createIssue(@RequestBody Issue issue) {
+    public IssueResponse createIssue(@RequestBody Issue issue) {
         return issueService.createIssue(issue);
     }
 
     @GetMapping
-    public List<Issue> getAllIssues() {
+    public List<IssueResponse> getAllIssues() {
         return issueService.getAllIssues();
     }
 }

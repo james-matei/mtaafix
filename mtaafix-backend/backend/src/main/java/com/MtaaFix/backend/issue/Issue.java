@@ -25,7 +25,8 @@ public class Issue {
 
     private String location;
 
-    private String status;
+   @Enumerated(EnumType.STRING)
+private IssueStatus status;
 
     private LocalDateTime createdAt;
 
