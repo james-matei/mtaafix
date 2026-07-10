@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api/api";
 import { login } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Login() {
 
@@ -71,6 +72,9 @@ navigate("/dashboard");
                     Login
 
                 </button>
+
+                <br /> <br />
+                <Link to="/register">Don't have an account? Register</Link>
 
             </form>
 

@@ -3,6 +3,7 @@ package com.mtaafix.backend.user;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
 @Table(name = "users")
 @Getter
