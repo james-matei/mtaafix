@@ -1,32 +1,40 @@
+import "./IssueCard.css";
+
 function IssueCard({ issue }) {
 
     return (
 
-        <div
-            className="issue-card"
-        >
+        <div className="issue-card">
 
-            <h3>{issue.title}</h3>
+            <div className="issue-header">
 
-            <p>{issue.description}</p>
+                <h3>{issue.title}</h3>
 
-            <p>
+                <span className={`status ${issue.status.toLowerCase()}`}>
 
-                <strong>Location:</strong> {issue.location}
+                    {issue.status}
 
-            </p>
+                </span>
 
-            <p>
+            </div>
 
-                <strong>Status:</strong> {issue.status}
+            <p className="issue-description">
 
-            </p>
-
-            <p>
-
-                <strong>Reported By:</strong> {issue.reportedBy}
+                {issue.description}
 
             </p>
+
+            <div className="issue-footer">
+
+                <span>📍 {issue.location}</span>
+
+                <span>👤 {issue.reportedBy}</span>
+
+                <span>
+                    {new Date(issue.createdAt).toLocaleDateString()}
+                </span>
+
+            </div>
 
         </div>
 

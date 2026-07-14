@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ReportIssue from "./pages/ReportIssue";
+import MyIssues from "./pages/MyIssues";
 
 function App() {
 
@@ -24,6 +26,24 @@ function App() {
                         <Dashboard />
                     </ProtectedRoute>
                 } />
+
+                        <Route
+                path="/report"
+                    element={
+                    <ProtectedRoute>
+                        <ReportIssue />
+                    </ProtectedRoute>
+                }
+            />
+              
+                <Route
+    path="/my-issues"
+    element={
+        <ProtectedRoute>
+            <MyIssues />
+        </ProtectedRoute>
+    }
+/>
 
             </Routes>
 

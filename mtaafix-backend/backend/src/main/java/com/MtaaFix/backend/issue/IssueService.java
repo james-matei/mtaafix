@@ -1,12 +1,15 @@
 package com.mtaafix.backend.issue;
 
+import com.mtaafix.backend.issue.dto.IssueRequest;
 import com.mtaafix.backend.issue.dto.IssueResponse;
 import com.mtaafix.backend.user.User;
 import com.mtaafix.backend.user.UserRepository;
+import com.mtaafix.backend.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +21,13 @@ public class IssueService {
     private final IssueRepository issueRepository;
     private final UserRepository userRepository;
 
-    public IssueResponse createIssue(Issue issue) {
+    public IssueResponse createIssue(IssueRequest request) {
+
+        Issue issue = new Issue();
+
+issue.setTitle(request.getTitle());
+issue.setDescription(request.getDescription());
+issue.setLocation(request.getLocation());
 
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
@@ -28,7 +37,7 @@ public class IssueService {
         System.out.println("Logged in user: " + email);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         issue.setUser(user);
         issue.setStatus(IssueStatus.OPEN);
@@ -59,4 +68,20 @@ public class IssueService {
                 issue.getUser().getName()
         );
     }
+
+    public List<IssueResponse> getMyIssues() {
+
+    Authentication authentication =
+            SecurityContextHolder.getContext().getAuthentication();
+
+    String email = authentication.getName();
+
+    User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    return issueRepository.findByUser(user)
+            .stream()
+            .map(this::mapToResponse)
+            .toList();
+}
 }

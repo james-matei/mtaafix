@@ -32,9 +32,44 @@ function Dashboard() {
                         Track issues reported by residents in your community.
                     </p>
                 </div>
+                <input
+
+    className="search-bar"
+
+    placeholder="Search issues..."
+
+/>
 
                 <div className="dashboard-content">
-                    <h2>Recent Issues</h2>
+                  <div className="stats">
+
+                    
+
+    <div className="stat-card">
+
+        <h2>{issues.filter(i => i.status === "OPEN").length}</h2>
+
+        <p>Open</p>
+
+    </div>
+
+    <div className="stat-card">
+
+        <h2>{issues.filter(i => i.status === "IN_PROGRESS").length}</h2>
+
+        <p>In Progress</p>
+
+    </div>
+
+    <div className="stat-card">
+
+        <h2>{issues.filter(i => i.status === "RESOLVED").length}</h2>
+
+        <p>Resolved</p>
+
+    </div>
+
+</div>  
                     
                     {loading ? (
                         <div className="loading-state">Loading community issues...</div>

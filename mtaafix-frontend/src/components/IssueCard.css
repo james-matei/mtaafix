@@ -1,0 +1,79 @@
+.issue-card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.issue-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.issue-description{
+
+    margin:18px 0;
+
+    color:#555;
+
+}
+
+.issue-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:14px;
+
+    color:gray;
+
+}
+
+.status{
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+.open{
+
+    background:#e8f5e9;
+
+    color:#2e7d32;
+
+}
+
+.in_progress{
+
+    background:#fff3cd;
+
+    color:#856404;
+
+}
+
+.resolved{
+
+    background:#e3f2fd;
+
+    color:#1565c0;
+
+}
