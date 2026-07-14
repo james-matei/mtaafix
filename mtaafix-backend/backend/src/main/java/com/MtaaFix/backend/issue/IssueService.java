@@ -84,4 +84,13 @@ issue.setLocation(request.getLocation());
             .map(this::mapToResponse)
             .toList();
 }
+public IssueResponse getIssueById(Long id) {
+
+    Issue issue = issueRepository.findById(id)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("Issue not found"));
+
+    return mapToResponse(issue);
+}
+
 }

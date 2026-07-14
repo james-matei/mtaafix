@@ -18,3 +18,8 @@ export const getMyIssues = async () => {
     return response.data;
 
 };
+
+export const getIssueById = async (id) => {
+    const response = await api.get(`/issues/${id}`);
+    return response.data;
+};

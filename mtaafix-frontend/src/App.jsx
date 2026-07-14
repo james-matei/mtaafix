@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ReportIssue from "./pages/ReportIssue";
 import MyIssues from "./pages/MyIssues";
+import IssueDetails from "./pages/IssueDetails";
 
 function App() {
 
@@ -27,23 +28,23 @@ function App() {
                     </ProtectedRoute>
                 } />
 
-                        <Route
-                path="/report"
-                    element={
-                    <ProtectedRoute>
+                        <Route path="/report" element={            <ProtectedRoute>
                         <ReportIssue />
                     </ProtectedRoute>
                 }
             />
               
-                <Route
-    path="/my-issues"
-    element={
+                <Route  path="/my-issues" element={
         <ProtectedRoute>
             <MyIssues />
         </ProtectedRoute>
-    }
-/>
+    }/>
+              
+                <Route  path="/issues/:id" element={
+        <ProtectedRoute>
+            <IssueDetails />
+        </ProtectedRoute>
+    }/>
 
             </Routes>
 

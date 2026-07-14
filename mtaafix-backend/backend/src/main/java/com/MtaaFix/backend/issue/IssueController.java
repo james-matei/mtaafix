@@ -33,5 +33,11 @@ public List<IssueResponse> getMyIssues() {
     return issueService.getMyIssues();
 
 }
+@GetMapping("/{id}")
+public IssueResponse getIssueById(@PathVariable Long id) {
+
+    return issueService.getIssueById(id);
+
+}
 
 }

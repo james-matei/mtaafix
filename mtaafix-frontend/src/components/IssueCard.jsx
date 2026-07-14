@@ -1,10 +1,17 @@
 import "./IssueCard.css";
+import {useNavigate} from "react-router-dom";
 
 function IssueCard({ issue }) {
 
+    const navigate = useNavigate();
+
+
     return (
 
-        <div className="issue-card">
+        <div className="issue-card"
+        onClick={() => navigate(`/issues/${issue.id}`)}
+
+        >
 
             <div className="issue-header">
 
