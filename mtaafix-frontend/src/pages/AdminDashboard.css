@@ -1,0 +1,118 @@
+.admin-dashboard {
+
+    padding: 30px;
+
+}
+
+
+.dashboard-header {
+
+    margin-bottom: 30px;
+
+}
+
+
+.dashboard-header h1 {
+
+    font-size: 32px;
+    margin-bottom: 8px;
+
+}
+
+
+.dashboard-header p {
+
+    color: #666;
+
+}
+
+
+
+.stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+
+    gap: 20px;
+
+}
+
+
+
+.stat-card {
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    box-shadow:
+    0 4px 15px rgba(0,0,0,0.08);
+
+}
+
+
+
+.stat-icon {
+
+    font-size:35px;
+
+}
+
+
+.stat-card h3 {
+
+    margin:0;
+
+    color:#555;
+
+}
+
+
+
+.stat-card p {
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    margin-top:10px;
+
+}
+
+
+
+.recent-section {
+
+    margin-top:40px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+}
+.stat-card {
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+
+.stat-card:hover {
+
+    transform:translateY(-5px);
+
+}

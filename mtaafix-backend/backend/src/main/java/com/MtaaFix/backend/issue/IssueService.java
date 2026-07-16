@@ -71,7 +71,9 @@ issue.setLocation(request.getLocation());
                 issue.getLocation(),
                 issue.getStatus(),
                 issue.getCreatedAt(),
-                issue.getUser().getName()
+                issue.getUser() 
+                !=null ? issue.getUser().getName()
+                 : "Unknown"
         );
     }
 

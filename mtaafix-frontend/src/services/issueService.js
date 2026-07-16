@@ -30,3 +30,15 @@ export const updateIssue = async (id, issue) => {
     return response.data;
 
 };
+export const updateIssueStatus = async (id, status) => {
+
+    const response = await api.patch(
+        `/issues/${id}/status`,
+        {
+            status: status
+        }
+    );
+
+    return response.data;
+
+};

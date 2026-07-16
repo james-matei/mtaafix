@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
 import api from "../api/api";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
     const navigate = useNavigate();
@@ -28,7 +29,20 @@ function Login() {
             await api.get("/test").catch(err => console.log("Test endpoint optional check failed:", err));
 
             setMessage({ type: "success", text: "Welcome back! Redirecting..." });
-            setTimeout(() => navigate("/dashboard"), 1500);
+
+            const decoded = jwtDecode(token);
+            console.log("Decoded JWT:", decoded);
+
+            setTimeout(() => {
+
+    if (decoded.role === "ADMIN") {
+        navigate("/admin/dashboard");
+    } else {
+        navigate("/dashboard");
+    }
+
+}, 1500);
+
         } catch (error) {
             console.error(error);
             setMessage({ 

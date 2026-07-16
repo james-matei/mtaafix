@@ -8,6 +8,8 @@ import ReportIssue from "./pages/ReportIssue";
 import MyIssues from "./pages/MyIssues";
 import IssueDetails from "./pages/IssueDetails";
 import EditIssue from "./pages/EditIssue";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLayout from "./components/AdminLayout";
 
 function App() {
 
@@ -53,7 +55,20 @@ function App() {
                     <EditIssue />
                 </ProtectedRoute>
             }/>
+        
+        <Route 
+    path="/admin/dashboard" 
+    element={
+        <ProtectedRoute  role="ADMIN">
 
+            <AdminLayout>
+                <AdminDashboard />
+            </AdminLayout>
+
+            <AdminDashboard />
+        </ProtectedRoute>
+    }
+/>
           
             </Routes>
 
