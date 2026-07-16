@@ -66,4 +66,23 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(UnauthorizedActionException.class)
+@ResponseStatus(HttpStatus.FORBIDDEN)
+public ErrorResponse handleUnauthorized(
+
+        UnauthorizedActionException ex,
+        HttpServletRequest request) {
+
+    return new ErrorResponse(
+
+            LocalDateTime.now(),
+            HttpStatus.FORBIDDEN.value(),
+            "Forbidden",
+            ex.getMessage(),
+            request.getRequestURI()
+
+    );
+
+}
+
 }

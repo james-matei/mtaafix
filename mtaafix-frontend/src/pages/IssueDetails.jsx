@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { getIssueById } from "../services/issueService";
+import { useNavigate } from "react-router-dom";
 
 function IssueDetails() {
+
+    const navigate = useNavigate();
 
     const { id } = useParams();
 
@@ -14,6 +17,8 @@ function IssueDetails() {
         loadIssue();
 
     }, []);
+
+
 
     const loadIssue = async () => {
 
@@ -70,6 +75,13 @@ function IssueDetails() {
                     {new Date(issue.createdAt).toLocaleString()}
 
                 </p>
+                     
+            <button
+    className="edit-btn"
+    onClick={() => navigate(`/issues/edit/${issue.id}`)}
+>
+    Edit Issue
+</button>
 
             </div>
 

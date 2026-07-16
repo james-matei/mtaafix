@@ -8,5 +8,6 @@ import java.util.List;
 public interface IssueRepository extends JpaRepository<Issue, Long> {
 
     List<Issue> findByUser(User user);
+    long countByStatus(IssueStatus status);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.mtaafix.backend.exception.EmailAlreadyExistsException;
 import com.mtaafix.backend.exception.InvalidCredentialsException;
+import com.mtaafix.backend.user.Role;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class AuthService {
     user.setName(request.getName());
     user.setEmail(request.getEmail());
     user.setPassword(passwordEncoder.encode(request.getPassword()));
-
+    user.setRole(Role.USER);
     userRepository.save(user);
 
     return "User registered successfully";
@@ -43,7 +44,7 @@ public String login(LoginRequest request) {
         throw new InvalidCredentialsException("Invalid email or password");
     }
 
-    return jwtUtil.generateToken(user.getEmail());
+    return jwtUtil.generateToken(user.getEmail(), user.getRole().name());
 }
 
 }

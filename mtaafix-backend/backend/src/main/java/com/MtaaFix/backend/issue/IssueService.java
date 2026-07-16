@@ -2,10 +2,16 @@ package com.mtaafix.backend.issue;
 
 import com.mtaafix.backend.issue.dto.IssueRequest;
 import com.mtaafix.backend.issue.dto.IssueResponse;
+import com.mtaafix.backend.issue.dto.UpdateIssueRequest;
+import com.mtaafix.backend.issue.dto.UpdateStatusRequest;
 import com.mtaafix.backend.user.User;
 import com.mtaafix.backend.user.UserRepository;
 import com.mtaafix.backend.exception.ResourceNotFoundException;
+import com.mtaafix.backend.exception.UnauthorizedActionException;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -91,6 +97,71 @@ public IssueResponse getIssueById(Long id) {
                     new ResourceNotFoundException("Issue not found"));
 
     return mapToResponse(issue);
+}
+public IssueResponse updateIssue(Long id, UpdateIssueRequest request) {
+
+    Authentication authentication =
+            SecurityContextHolder.getContext().getAuthentication();
+
+    String email = authentication.getName();
+
+    User currentUser = userRepository.findByEmail(email)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("User not found"));
+
+    Issue issue = issueRepository.findById(id)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("Issue not found"));
+
+    // Ensure only the owner can edit
+    if (!issue.getUser().getId().equals(currentUser.getId())) {
+       throw new UnauthorizedActionException(
+        "You are not allowed to edit this issue.");
+    }
+
+    issue.setTitle(request.getTitle());
+    issue.setDescription(request.getDescription());
+    issue.setLocation(request.getLocation());
+
+    Issue updatedIssue = issueRepository.save(issue);
+
+    return mapToResponse(updatedIssue);
+}
+public void deleteIssue(Long id) {
+
+    Authentication authentication =
+            SecurityContextHolder.getContext().getAuthentication();
+
+    String email = authentication.getName();
+
+    User currentUser = userRepository.findByEmail(email)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("User not found"));
+
+    Issue issue = issueRepository.findById(id)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("Issue not found"));
+
+    if (!issue.getUser().getId().equals(currentUser.getId())) {
+        throw new UnauthorizedActionException(
+                "You are not allowed to delete this issue.");
+    }
+
+    issueRepository.delete(issue);
+}
+@PreAuthorize("hasRole('ADMIN')")
+public IssueResponse updateStatus(Long id,
+                                  UpdateStatusRequest request) {
+
+    Issue issue = issueRepository.findById(id)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("Issue not found"));
+
+    issue.setStatus(request.getStatus());
+
+    Issue saved = issueRepository.save(issue);
+
+    return mapToResponse(saved);
 }
 
 }

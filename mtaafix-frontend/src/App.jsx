@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ReportIssue from "./pages/ReportIssue";
 import MyIssues from "./pages/MyIssues";
 import IssueDetails from "./pages/IssueDetails";
+import EditIssue from "./pages/EditIssue";
 
 function App() {
 
@@ -45,7 +46,15 @@ function App() {
             <IssueDetails />
         </ProtectedRoute>
     }/>
+         
 
+            <Route path="/issues/edit/:id" element={
+                <ProtectedRoute>
+                    <EditIssue />
+                </ProtectedRoute>
+            }/>
+
+          
             </Routes>
 
         </BrowserRouter>
