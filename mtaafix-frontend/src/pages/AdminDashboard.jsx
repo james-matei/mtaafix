@@ -97,17 +97,6 @@ function AdminDashboard() {
 
 
 
-            <div className="recent-section">
-
-                <h2>
-                    Recent Issues
-                </h2>
-
-
-                <AdminIssueTable filter={filter} />
-
-            </div>
-
 
         </div>
 

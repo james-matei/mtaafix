@@ -10,6 +10,9 @@ import IssueDetails from "./pages/IssueDetails";
 import EditIssue from "./pages/EditIssue";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLayout from "./components/AdminLayout";
+import AdminIssues from "./pages/AdminIssues";
+import AdminUsers from "./pages/AdminUsers";
+
 
 function App() {
 
@@ -27,6 +30,7 @@ function App() {
 
                 <Route path="/dashboard" element={
                     <ProtectedRoute>
+                        
                         <Dashboard />
                     </ProtectedRoute>
                 } />
@@ -65,7 +69,30 @@ function App() {
                 <AdminDashboard />
             </AdminLayout>
 
-            <AdminDashboard />
+            
+        </ProtectedRoute>
+    }
+/>
+
+    
+        <Route
+    path="/admin/issues"
+    element={
+        <ProtectedRoute role="ADMIN">
+            <AdminLayout>
+                <AdminIssues />
+            </AdminLayout>
+        </ProtectedRoute>
+    }
+/>
+
+        <Route
+    path="/admin/users"
+    element={
+        <ProtectedRoute role="ADMIN">
+            <AdminLayout>
+                <AdminUsers />
+            </AdminLayout>
         </ProtectedRoute>
     }
 />

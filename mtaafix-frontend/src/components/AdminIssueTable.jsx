@@ -5,7 +5,8 @@ import { getAllIssues, updateIssueStatus } from "../services/issueService";
 function AdminIssueTable({filter}){
 
     const [issues,setIssues] = useState([]);
-
+    const [search, setSearch] = useState("");
+    const [statusFilter, setStatusFilter] = useState("ALL");
 
     useEffect(()=>{
 
@@ -42,22 +43,66 @@ function AdminIssueTable({filter}){
 
 };
 
-   const filteredIssues = 
-    filter === "ALL"
-    ? issues
-    : issues.filter(
-        issue => issue.status === filter
-      );
+   const filteredIssues = issues.filter((issue) => {
+
+    const matchesStatus =
+        statusFilter === "ALL" ||
+        issue.status === statusFilter;
+
+    const matchesSearch =
+        issue.title.toLowerCase().includes(search.toLowerCase()) ||
+
+        issue.location.toLowerCase().includes(search.toLowerCase()) ||
+
+        issue.reportedBy.toLowerCase().includes(search.toLowerCase());
+
+    return matchesStatus && matchesSearch;
+
+});
 
     return (
 
+        
+
         <div className="issue-table-container">
 
-            <h2>
-                Manage Issues
-            </h2>
+            <div className="toolbar">
+
+    <input
+        type="text"
+        placeholder="Search by title, location or reporter..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+    />
+
+</div>
+
+                <div className="filter-buttons">
+
+    <button onClick={() => setStatusFilter("ALL")}>
+        All
+    </button>
+
+    <button onClick={() => setStatusFilter("OPEN")}>
+        Open
+    </button>
+
+    <button onClick={() => setStatusFilter("IN_PROGRESS")}>
+        In Progress
+    </button>
+
+    <button onClick={() => setStatusFilter("RESOLVED")}>
+        Resolved
+    </button>
+
+    <button onClick={() => setStatusFilter("REJECTED")}>
+        Rejected
+    </button>
+
+</div>
 
 
+        
             <table>
 
                 <thead>

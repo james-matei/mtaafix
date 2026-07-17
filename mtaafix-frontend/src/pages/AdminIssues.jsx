@@ -12,7 +12,7 @@ function AdminIssues(){
             </h1>
 
 
-            <AdminIssueTable />
+            <AdminIssueTable/>
 
         </div>
 
