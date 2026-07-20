@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { createIssue } from "../services/issueService";
+import LocationPicker from "../components/LocationPicker";
 
 function ReportIssue() {
 
@@ -10,18 +11,38 @@ function ReportIssue() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
 
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+        if (latitude === null || longitude === null) {
+    alert("Please select a location on the map.");
+    return;
+}
 
         try {
 
+            console.log({
+
+    title,
+    description,
+    location,
+    latitude,
+    longitude
+
+});
+
             await createIssue({
-                title,
-                description,
-                location
-            });
+
+    title,
+    description,
+    location,
+    latitude,
+    longitude
+
+});
 
             alert("Issue reported successfully!");
 
@@ -72,8 +93,7 @@ function ReportIssue() {
                         type="text"
                         placeholder="Location"
                         value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        required
+                       readOnly
                     />
 
                     <button type="submit">
@@ -85,6 +105,17 @@ function ReportIssue() {
                 </form>
 
             </div>
+
+            <LocationPicker
+    onLocationSelect={(data) => {
+
+        setLatitude(data.latitude);
+
+        setLongitude(data.longitude);
+        setLocation(data.location);
+
+    }}
+/>
 
         </div>
 

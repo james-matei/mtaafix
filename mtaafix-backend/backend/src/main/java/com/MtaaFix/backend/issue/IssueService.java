@@ -48,6 +48,9 @@ issue.setLocation(request.getLocation());
         issue.setUser(user);
         issue.setStatus(IssueStatus.OPEN);
         issue.setCreatedAt(LocalDateTime.now());
+        issue.setLocation(request.getLocation());
+        issue.setLatitude(request.getLatitude());
+        issue.setLongitude(request.getLongitude());
 
         Issue savedIssue = issueRepository.save(issue);
 
@@ -73,7 +76,9 @@ issue.setLocation(request.getLocation());
                 issue.getCreatedAt(),
                 issue.getUser() 
                 !=null ? issue.getUser().getName()
-                 : "Unknown"
+                 : "Unknown",
+                issue.getLatitude(),
+                issue.getLongitude()
         );
     }
 

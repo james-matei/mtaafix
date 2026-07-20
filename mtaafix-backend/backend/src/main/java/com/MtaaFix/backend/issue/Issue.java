@@ -25,6 +25,12 @@ public class Issue {
 
     private String location;
 
+    @Column(nullable = true)
+    private Double latitude;
+
+    @Column(nullable = true)
+    private Double longitude;
+
    @Enumerated(EnumType.STRING)
 private IssueStatus status;
 
@@ -33,4 +39,7 @@ private IssueStatus status;
     @ManyToOne
     @JoinColumn(name = "user_id")   
     private User user;
+      
+    
+
 }

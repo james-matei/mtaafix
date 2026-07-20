@@ -29,20 +29,20 @@ function App() {
                 <Route path="/register" element={<Register />} />
 
                 <Route path="/dashboard" element={
-                    <ProtectedRoute>
+                    <ProtectedRoute role="USER">
                         
                         <Dashboard />
                     </ProtectedRoute>
                 } />
 
-                        <Route path="/report" element={            <ProtectedRoute>
+                        <Route path="/report" element={<ProtectedRoute role="USER">
                         <ReportIssue />
                     </ProtectedRoute>
                 }
             />
               
                 <Route  path="/my-issues" element={
-        <ProtectedRoute>
+        <ProtectedRoute role="USER">
             <MyIssues />
         </ProtectedRoute>
     }/>

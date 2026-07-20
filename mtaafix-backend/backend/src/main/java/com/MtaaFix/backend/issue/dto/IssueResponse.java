@@ -24,4 +24,8 @@ public class IssueResponse {
 
     private String reportedBy;
 
+    private Double latitude;
+
+    private Double longitude;
+
 }

@@ -3,6 +3,8 @@ import { getDashboardStats } from "../services/dashboardServices";
 import StatCard from "../components/StatCard";
 import "./AdminDashboard.css";
 import AdminIssueTable from "../components/AdminIssueTable";
+import StatusPieChart from "../components/StatusPieChart";
+import StatusBarChart from "../components/StatusBarChart";
 
 
 function AdminDashboard() {
@@ -95,6 +97,13 @@ function AdminDashboard() {
 
             </div>
 
+                <div className="charts-grid">
+
+    <StatusPieChart stats={stats} />
+
+    <StatusBarChart stats={stats} />
+
+</div>
 
 
 
